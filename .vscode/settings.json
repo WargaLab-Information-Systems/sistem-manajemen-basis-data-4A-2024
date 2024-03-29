@@ -1,0 +1,32 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "username": "root",
+            "database": "latihanmodul1",
+            "name": "modul1",
+            "password": ""
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "db_Praktikum",
+            "username": "root",
+            "database": "latihanmodul1",
+            "password": ""
+        }
+    ]
+}
