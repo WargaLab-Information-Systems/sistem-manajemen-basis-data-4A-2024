@@ -5,67 +5,67 @@ USE swalanya;
 -- Membuat Tabel --
 
 CREATE TABLE tb_Pelanggan(
-Id_pelanggan INT NOT NULL, 
+id_pelanggan INT NOT NULL, 
 nama_pelanggan VARCHAR (20) NOT NULL, 
 alamat_pelanggan VARCHAR (30), 
 nomorHp_pelanggan VARCHAR (10), 
-Primary key(Id_pelanggan));
+Primary key(id_pelanggan));
 
 CREATE TABLE tb_Supplier(
-Id_Supplier INT NOT NULL, 
-nama_Supplier VARCHAR (20), 
-alamat_Supplier VARCHAR (30), 
-nomorHp_Supplier VARCHAR (10), 
-Primary key(Id_Supplier));
+id_supplier INT NOT NULL, 
+nama_supplier VARCHAR (20), 
+alamat_supplier VARCHAR (30), 
+nomorhp_supplier VARCHAR (10), 
+Primary key(id_supplier));
 
 CREATE TABLE Barang(
-Id_Barang INT NOT NULL, 
-Nama_Barang Varchar (30) NOT NULL, 
-Stok INT, 
-Primary Key (Id_Barang));
+id_barang INT NOT NULL, 
+nama_barang Varchar (30) NOT NULL, 
+stok INT, 
+Primary Key (id_barang));
 
 
 CREATE TABLE Tb_Retur (
-Id_retur INT NOT NULL,
-Id_Pelanggan INT NOT NULL,
-Id_Barang INT NOT NULL,
-Jumlah INT,
-Tanggal DATE,
-Primary key(Id_retur),
-Foreign Key (Id_Pelanggan) References tb_Pelanggan(Id_Pelanggan),
-Foreign Key (Id_Barang) References Barang(Id_Barang));
+id_retur INT NOT NULL,
+id_Pelanggan INT NOT NULL,
+id_Barang INT NOT NULL,
+jumlah INT,
+tanggal DATE,
+Primary key(id_retur),
+Foreign Key (id_pelanggan) References tb_Pelanggan(id_pelanggan),
+Foreign Key (id_barang) References Barang(id_barang));
 
 CREATE TABLE Penjualan (
-Id_Penjualan INT NOT NULL,
-Id_Pelanggan INT NOT NULL,
-Id_Barang INT NOT NULL,
-Jumlah INT,
-Tanggal DATE,
+id_penjualan INT NOT NULL,
+id_pelanggan INT NOT NULL,
+id_barang INT NOT NULL,
+jumlah INT,
+tanggal DATE,
 total_harga INT(30) NOT NULL,
-Primary key(Id_Penjualan),
-Foreign Key (Id_Pelanggan) References tb_Pelanggan(Id_Pelanggan),
-Foreign Key (Id_Barang) References Barang(Id_Barang));
+Primary key(id_penjualan),
+Foreign Key (id_pelanggan) References tb_Pelanggan(id_pelanggan),
+Foreign Key (id_barang) References Barang(id_barang));
 
 CREATE TABLE Pembelian (
-Id_Pembelian INT NOT NULL,
-Id_Supplier INT NOT NULL,
-Id_Barang INT NOT NULL,
-Jumlah INT,
-Tanggal DATE,
+id_pembelian INT NOT NULL,
+id_supplier INT NOT NULL,
+id_barang INT NOT NULL,
+jumlah INT,
+tanggal DATE,
 harga_beli INT(30) NOT NULL,
-Primary key(Id_Pembelian),
-Foreign Key (Id_Supplier) References tb_Supplier(Id_Supplier),
-Foreign Key (Id_Barang) References Barang(Id_Barang));
+Primary key(id_pembelian),
+Foreign Key (id_supplier) References tb_Supplier(id_supplier),
+Foreign Key (id_barang) References Barang(id_barang));
 
 CREATE TABLE KoreksiStok (
-Id_Koreksi INT NOT NULL,
-Id_Barang INT NOT NULL,
-Jumlah INT (20) NOT NULL,
-Tanggal DATE,
+id_koreksi INT NOT NULL,
+id_barang INT NOT NULL,
+jumlah INT (20) NOT NULL,
+tanggal DATE,
 stok_masuk INT(20) NOT NULL,
 stok_keluar INT(20) NOT NULL,
-Primary key(Id_Koreksi),
-Foreign Key (Id_Barang) References Barang(Id_Barang));
+Primary key(id_koreksi),
+Foreign Key (id_barang) References Barang(id_barang));
 
 
 -- -------------------- --
