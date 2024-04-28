@@ -91,4 +91,4 @@ FROM teachers;
 
 DROP VIEW mengajar;
 
-SELECT * FROM mengajar;,
+SELECT * FROM mengajar;
