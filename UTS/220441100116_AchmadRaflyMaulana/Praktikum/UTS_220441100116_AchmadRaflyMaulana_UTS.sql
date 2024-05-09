@@ -1,3 +1,4 @@
+
 CREATE DATABASE toko_buku;
 
 USE toko_buku;
