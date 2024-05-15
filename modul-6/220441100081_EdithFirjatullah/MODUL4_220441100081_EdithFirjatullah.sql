@@ -123,3 +123,110 @@ VALUES
 ('PMJ13', 'A01', 'PTG005', '2024-04-23', '2024-04-29', 'BK010'),
 ('PMJ14', 'A01', 'PTG005', '2024-04-23', '2024-04-29', 'BK07'),
 ('PMJ15', 'A01', 'PTG005', '2024-04-23', '2024-04-29', 'BK02');
+
+------Soal----------------------------------------------------------------------------------------------------------
+-----1-----
+CREATE PROCEDURE biodata(
+    IN nim INT,
+    IN nama VARCHAR(20),
+    IN alamat VARCHAR(40),
+    IN noTelp INT,
+    IN jenisKelamin VARCHAR(1),
+    IN hobi VARCHAR(30),
+    IN umur INT
+)
+BEGIN
+    DECLARE vNim INT;
+    DECLARE vNamaM VARCHAR(20);
+    DECLARE vAlamat VARCHAR(40);
+    DECLARE vNoTelp INT;
+    DECLARE vJenisKelamin VARCHAR(1);
+    DECLARE vHobi VARCHAR(30);
+    DECLARE vumur INT;
+    
+    SET vNim = nim;
+    SET vNamaM = nama;
+    SET vAlamat = alamat;
+    SET vNoTelp = noTelp;
+    SET vJenisKelamin = jenisKelamin;
+    SET vHobi = hobi;
+    SET vumur = umur;
+    
+
+    SELECT vNim AS NIM, 
+           vNamaM AS Nama_Mahasiswa, 
+           vAlamat AS Alamat_asal, 
+           vNoTelp AS No_Telp,
+           vJenisKelamin AS Jenis_Kelamin, 
+           vHobi AS Hobi, 
+           vumur AS Umur;
+END
+
+DROP PROCEDURE biodata;
+
+CALL biodata (200441100123, 'Adinda', 'Sumedang', 0897654321, 'L', 'Memancing', 23)
+----------------------------------------------------------------------------------------------------------------
+
+-----2----------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE peringatanbuku()
+BEGIN 
+	SELECT kode_kembali, id_anggota, tgl_pinjam, tgl_kembali, DATEDIFF(tgl_kembali, tgl_pinjam) AS lama_meminjam,
+	CASE WHEN DATEDIFF(tgl_kembali, tgl_pinjam) <= 2 THEN ' Silahkan Pergunakan Buku dengan baik'
+	WHEN DATEDIFF(tgl_kembali, tgl_pinjam) BETWEEN 3 AND 5 THEN  ' Ingat!, Waktu pinjam segera habis'
+	WHEN DATEDIFF(tgl_kembali, tgl_pinjam) >= 6 THEN ' Warning!!!, Denda menanti anda' END AS "statusnya"
+	FROM pengembalian ORDER BY lama_meminjam ASC;
+END 
+
+call peringatanbuku()
+DROP PROCEDURE peringatanbuku;
+----------------------------------------------------------------------------------------------------------------
+
+-----3----------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE dendapinjam(
+	IN kode VARCHAR(10))
+BEGIN
+DECLARE total_denda VARCHAR (50);
+
+	IF ((SELECT SUM(denda) FROM pengembalian WHERE id_anggota = kode) !=0) THEN
+		SET total_denda = (SELECT SUM(denda) FROM pengembalian WHERE id_anggota=kode);
+	ELSE 	
+		SET total_denda = 'Anda tidak memiliki denda';
+	END IF;
+		SELECT total_denda;
+END
+
+CALL dendapinjam('A03');
+DROP PROCEDURE dendapinjam;
+----------------------------------------------------------------------------------------------------------------
+
+-----4----------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE dataPeminjaman (
+    IN jumlah INT
+)
+BEGIN
+    DECLARE ini INT DEFAULT 1;
+
+    WHILE ini <= jumlah DO
+        SELECT * FROM peminjaman LIMIT jumlah;
+        SET ini = ini + 1;
+    END WHILE;
+END
+
+CALL dataPeminjaman(10);
+----------------------------------------------------------------------------------------------------------------
+
+-----5----------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE hapusDataanggota ()
+BEGIN
+	 DELETE FROM anggota
+    WHERE jenis_kelamin = 'Laki-laki'
+    AND id_anggota NOT IN (
+        SELECT DISTINCT id_anggota 
+        FROM peminjaman 
+        WHERE status_pinjam != "Tidak Meminjam"
+    );
+END
+
+CALL hapusDataanggota();
+SELECT * FROM anggota;
+----------------------------------------------------------------------------------------------------------------
