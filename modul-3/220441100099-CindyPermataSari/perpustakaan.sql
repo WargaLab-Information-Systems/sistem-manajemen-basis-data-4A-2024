@@ -223,3 +223,8 @@ DELIMITER ;
 SET @jumlahBuku = 10;
 CALL updateJumlahBuku(@jumlahBuku, 'B001');
 SELECT @jumlahBuku AS 'Jumlah Buku Terupdate';
+
+
+
+
+
