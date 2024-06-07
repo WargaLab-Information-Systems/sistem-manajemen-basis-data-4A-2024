@@ -115,12 +115,14 @@ DROP TRIGGER hitung_bayar_denda;
 INSERT INTO peminjaman (
     id_peminjaman, id_mobil, id_pelanggan, tgl_pinjam, tgl_rencana_kembali, total_hari, total_bayar, tgl_kembali, denda
 ) VALUES (
-    1, 1, 1, '2024-05-01', '2024-05-05', 0, 0, '2024-05-05', 0
+    2, 1, 1, '2024-05-01', '2024-05-05', 0, 0, '2024-05-05', 0
 );
 
 
 
 //////////NOMOR 3/////////
+
+DROP TRIGGER cek_panjang_nik;
 
 DELIMITER //
 
@@ -134,6 +136,10 @@ BEGIN
         SET pesan = CONCAT('Panjang NIK harus 16 karakter. Panjang NIK yang dimasukkan : ', CHAR_LENGTH(NEW.nik));
         SIGNAL SQLSTATE '45000' 
         SET MESSAGE_TEXT = pesan;
+    ELSEIF CHAR_LENGTH(NEW.nik) > 16 THEN
+        SET pesan = CONCAT('Panjang NIK harus 16 karakter. Panjang NIK yang dimasukkan : ', CHAR_LENGTH(NEW.nik));
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = pesan;
     END IF;
 END //
 
@@ -143,7 +149,7 @@ DELIMITER ;
 INSERT INTO pelanggan (
     id_pelanggan, nama, alamat, nik, no_telp, jenis_kelamin
 ) VALUES (
-    11, 'Rozikhin', 'Pamekasan', '35231756926492', '085765893214', 'L'
+    7, 'Deby', 'Pamekasan', '352317569298234723619', '085765893748', 'P'
 );
 
 //////NOMOR 4/////////
