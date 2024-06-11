@@ -57,15 +57,19 @@ DROP TABLE student_course;
 DELIMITER //
 CREATE PROCEDURE totalCredit(
 	IN idStudent INT(50),
-	INOUT totalCredits INT
+	OUT jmlCredits INT(50)
 )
 BEGIN
-	SET totalCredits = totalCredits+2;
-	UPDATE course SET credits = totalCredits;
+	SELECT COUNT(credits) INTO jmlCredits FROM students a JOIN student_course b ON a.id =b.student_id 
+	JOIN course c ON b.course_id = c.id WHERE idStudent = a.id;
 	
 END //
 DELIMITER;
 
-SET @jmlCredits = 3;
+SET @jumlahStok = 10;
 CALL totalCredit(111,@jmlCredits);
 SELECT @jmlCredits AS 'Jumlah credit setelah di perbarui';
+DROP PROCEDURE totalCredit;
+
+SET totalcredit COUNT(*);
+	UPDATE buku SET credits
